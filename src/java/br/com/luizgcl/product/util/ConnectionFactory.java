@@ -16,7 +16,7 @@ import java.sql.SQLException;
  */
 public class ConnectionFactory {
     
-    private static final String DB_URL = "jdbc:postgresql://localhost:5432/products";
+    private static final String DB_URL = "jdbc:postgresql://localhost:5432/alunos";
     
     public static Connection getConnection() 
             throws SQLException, Exception {

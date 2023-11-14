@@ -10,15 +10,16 @@ import java.util.List;
  *
  * @author luizleme
  */
-public interface GenericDAO {
+public interface GenericDAO<T> {
     
-    public Boolean save(Object object);
+    public Boolean save(T object);
     
-    public List<Object> get();
+    public List<T> get();
     
     public void delete(int idObject);
     
-    public Object find(int idObject);
+    public T find(int idObject);
     
-    public Boolean update(Object object);
+    public Boolean update(T object);
+    
 }

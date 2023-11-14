@@ -4,8 +4,8 @@
  */
 package br.com.luizgcl.product.controller;
 
-import br.com.luizgcl.product.dao.ProductDAO;
-import br.com.luizgcl.product.model.Product;
+import br.com.luizgcl.product.model.Aluno;
+import br.com.luizgcl.product.dao.AlunoDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -17,8 +17,8 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author luizleme
  */
-@WebServlet(name = "CreateProduct", urlPatterns = {"/CreateProduct"})
-public class CreateProduct extends HttpServlet {
+@WebServlet(name = "EditarAluno", urlPatterns = {"/EditarAluno"})
+public class EditarAluno extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,25 +33,28 @@ public class CreateProduct extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        String productName = request.getParameter("nomeproduto");
-        String productDescription = request.getParameter("descricaoproduto");
+        int idAluno = Integer.parseInt(request.getParameter("id_aluno"));
+        String nomeAluno = request.getParameter("nome_aluno");
+        int idadeAluno = Integer.parseInt(request.getParameter("idade_aluno"));
+        
+        Aluno aluno = new Aluno();
+        
+        aluno.setIdAluno(idAluno);
+        aluno.setNomeAluno(nomeAluno);
+        aluno.setIdadeAluno(idadeAluno);
         
         String message = "";
         
         try {
-            Product product = new Product();
+            AlunoDAO alunoDAO = new AlunoDAO();
             
-            product.setProductName(productName);
-            product.setProductDescription(productDescription);
-            
-            ProductDAO productDAO = new ProductDAO();
-            
-            if (productDAO.save(product)) {
-                message = "Produto cadastrado com sucesso!";
+            if (alunoDAO.update(aluno)) {
+                message = "Aluno atualizado com sucesso!";
             } else {
-                message = "Erro ao cadastrar produto!";
+                message = "Erro ao atualizar aluno!";
             }
-            request.setAttribute("mensagem", message);
+            
+            request.setAttribute("message", message);
             request.getRequestDispatcher("index.jsp").forward(request, response);
         } catch (Exception e) {
             System.err.print(e.getMessage());
